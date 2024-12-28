@@ -15,3 +15,40 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# Logs
+*.log
+logs/
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output
+*.class
+
+# Test report files
+*.html
+*.xml
+*.json
+
+# Browser drivers (if included in the repo)
+*.exe
+*.dmg
+*.zip
+
+# Maven dependencies
+.mvn/
+.m2/
+
+# Miscellaneous
+*.swp
+*.bak
+*.tmp
+
