@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class BasePage {
     protected WebDriver driver;
     private final WebDriverWait wait;
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     /**
      * Initializes the BasePage with a specific browser instance.
@@ -29,13 +30,29 @@ public class BasePage {
     }
 
     /**
+     * Checks if an element located by the given locator is visible on the page.
+     *
+     * @param locator The Selenium By locator used to find the element.
+     * @return true if the element is visible, false otherwise.
+     */
+    public boolean isVisible(By locator) {
+        try {
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            logger.info("Element located by " + locator + " is visible.");
+            return true;
+        } catch (Exception e) {
+            logger.warning("Element located by " + locator + " is not visible. Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
      * Waits for an element located by the given locator to become visible.
      *
      * @param locator The Selenium By locator used to find the element.
      * @return The visible WebElement.
      */
     protected WebElement waitForVisibility(By locator) {
-        Logger logger = Logger.getLogger(getClass().getName());
         WebElement element;
         try {
             element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -45,6 +62,28 @@ public class BasePage {
             throw e;
         } catch (Exception e) {
             logger.severe("An error occurred while waiting for visibility of element located by: " + locator + ". Error: " + e.getMessage());
+            throw e;
+        }
+        return element;
+    }
+
+    /**
+     * Waits for an element located by the given locator to become clickable.
+     *
+     * @param locator The Selenium By locator used to find the element.
+     * @return The clickable WebElement.
+     */
+    protected WebElement waitForClickability(By locator) {
+        Logger logger = Logger.getLogger(getClass().getName());
+        WebElement element;
+        try {
+            element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            logger.info("Element located by " + locator + " is clickable.");
+        } catch (TimeoutException e) {
+            logger.severe("Timeout while waiting for clickability of element located by: " + locator);
+            throw e;
+        } catch (Exception e) {
+            logger.severe("An error occurred while waiting for clickability of element located by: " + locator + ". Error: " + e.getMessage());
             throw e;
         }
         return element;

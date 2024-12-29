@@ -2,10 +2,17 @@ package com.tdl.googleMeet.pages;
 
 import com.tdl.googleMeet.util.BasePage;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 public class MeetingPage extends BasePage {
 
     private final String browser;
+
+    private final By addOthersButton = By.xpath("//span[contains(text(), 'Add others')]");
+    private final By emailInput = By.cssSelector("[placeholder='Enter name or email']");
+    private final By searchResultFirstOption = By.cssSelector("[aria-label='Search results'] li:first-child");
+    private final By sendEmailButton = By.xpath("//span[contains(text(), 'Send email')]");
+    private final By gotItPopUpButton = By.xpath("//span[contains(text(), 'Got it')]");
 
     private final By meetingLinkText = By.xpath("//div[contains(text(), 'meet.google.com')]");
     private final By turnOnMicButton = By.cssSelector("[aria-label='Turn on microphone']");
@@ -18,7 +25,20 @@ public class MeetingPage extends BasePage {
     public MeetingPage (String browser) {
         super(browser);
         this.browser = browser;
-        waitForVisibility(meetingLinkText);
+        click(turnOnMicButton);
+        if (isVisible(gotItPopUpButton)) click(gotItPopUpButton);
+    }
+
+    public MeetingPage addUserToMeeting (String email) {
+        click(addOthersButton);
+        enterText(emailInput, email);
+        String result = waitForVisibility(searchResultFirstOption).getAttribute("data-id");
+        Assert.assertEquals(email, result,
+                "The email displayed in the search result should be equal to: " + email + " actual: " + result);
+        click(searchResultFirstOption);
+        click(sendEmailButton);
+
+        return this;
     }
 
     public String getMeetingLink () {
@@ -35,8 +55,10 @@ public class MeetingPage extends BasePage {
     }
 
     public MeetingPage verifyLeaveCallButton () {
-        String cssProp = getCssProperty(leaveCallButton, "background-color");
-
+        String expectedColor = "cssProp";
+        String actualColor = getCssProperty(leaveCallButton, "background-color");
+        Assert.assertEquals(actualColor, expectedColor,
+                "The color of the leave call button should be equal to: " + expectedColor + " actual: " + actualColor);
         return this;
     }
 

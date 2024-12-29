@@ -10,7 +10,7 @@ public class LandingPage extends BasePage {
     private final By newMeetingButton = By.xpath("//span[contains(text(), 'New meeting')]");
     private final By instantMeetingOption = By.cssSelector("[aria-label='Start an instant meeting']");
     private final By meetingLinkOrCodeInput = By.cssSelector("[placeholder='Enter a code or link']");
-    private final By joinMeetingButton = By.xpath("//span[contains(text(), 'Join')]");
+    private final By joinMeetingButton = By.xpath("//span[contains(text(), 'Join')]/..");
 
     public LandingPage (String browser) {
         super(browser);
@@ -25,11 +25,11 @@ public class LandingPage extends BasePage {
         return new MeetingPage(browser);
     }
 
-    public MeetingPage joinMeeting (String url) {
+    public PreviewPage navigateToPreview (String url) {
         enterText(meetingLinkOrCodeInput, url);
-        click(joinMeetingButton);
+        waitForClickability(joinMeetingButton).click();
 
-        return new MeetingPage(browser);
+        return new PreviewPage(browser);
     }
 
 }
