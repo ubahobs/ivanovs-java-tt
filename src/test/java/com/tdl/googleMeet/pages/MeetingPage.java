@@ -1,6 +1,7 @@
 package com.tdl.googleMeet.pages;
 
 import com.tdl.googleMeet.util.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -31,6 +32,7 @@ public class MeetingPage extends BasePage {
         if (isVisible(gotItPopUpButton)) click(gotItPopUpButton);
     }
 
+    @Step("Add user to the meeting by email")
     public MeetingPage addUserToMeeting (String email) {
         click(addOthersButton);
         enterText(emailInput, email);
@@ -43,10 +45,12 @@ public class MeetingPage extends BasePage {
         return this;
     }
 
+    @Step("Retrieving meeting link")
     public String getMeetingLink () {
         return getText(meetingLinkText);
     }
 
+    @Step("Verifying meeting buttons")
     public MeetingPage verifyButtons () {
         click(turnOffMicButton);
         click(turnOnMicButton);
@@ -56,6 +60,7 @@ public class MeetingPage extends BasePage {
         return this;
     }
 
+    @Step("Verifying leave button color")
     public MeetingPage verifyLeaveCallButton () {
         String expectedColor;
         if (Objects.equals(browser, "chrome"))
@@ -68,6 +73,4 @@ public class MeetingPage extends BasePage {
                 "The color of the leave call button should be equal to: " + expectedColor + " actual: " + actualColor);
         return this;
     }
-
-
 }

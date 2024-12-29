@@ -1,10 +1,13 @@
 package com.tdl.googleMeet.util;
 
 import com.tdl.util.ConfigUtils;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
+import io.qameta.allure.testng.AllureTestNg;
 
+
+@Listeners(AllureTestNg.class)
 public class TestBase {
 
     @BeforeMethod
