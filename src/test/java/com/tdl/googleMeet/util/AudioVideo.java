@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 
 public class AudioVideo {
 
-    private final WebDriver driver;
     private final JavascriptExecutor js;
 
     /**
@@ -14,7 +13,6 @@ public class AudioVideo {
      * @param driver The WebDriver instance to use for executing JavaScript.
      */
     public AudioVideo(WebDriver driver) {
-        this.driver = driver;
         this.js = (JavascriptExecutor) driver;
     }
 
