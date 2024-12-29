@@ -8,6 +8,17 @@ public class BrowserUtils {
     private static WebDriver driver;
 
     /**
+     * Gets the WebDriver instance.
+     * @return The WebDriver instance.
+     */
+    public static WebDriver getDriver() {
+        if (driver == null)
+            throw new RuntimeException("WebDriver is not initialized. Call initializeDriver() first.");
+
+        return driver;
+    }
+
+    /**
      * Initializes the WebDriver if not already initialized.
      * @param browser The browser to use (e.g., "chrome", "firefox").
      */

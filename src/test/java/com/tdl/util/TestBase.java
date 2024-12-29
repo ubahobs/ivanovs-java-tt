@@ -12,10 +12,6 @@ public class TestBase {
 
         // Initialize the browser
         BrowserUtils.initializeDriver(browser);
-
-        // Open the base URL
-        String baseUrl = ConfigUtils.getConfigProperty("BASE_URL");
-        BrowserUtils.open(baseUrl);
     }
 
     @AfterMethod
