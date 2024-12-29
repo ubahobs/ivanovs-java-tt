@@ -1,6 +1,7 @@
 package com.tdl.googleMeet.pages;
 
 import com.tdl.googleMeet.util.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 public class LandingPage extends BasePage {
@@ -18,6 +19,7 @@ public class LandingPage extends BasePage {
         waitForVisibility(newMeetingButton);
     }
 
+    @Step("Start instant meeting")
     public MeetingPage startMeeting () {
         click(newMeetingButton);
         click(instantMeetingOption);
@@ -25,6 +27,7 @@ public class LandingPage extends BasePage {
         return new MeetingPage(browser);
     }
 
+    @Step("Navigate to the preview page")
     public PreviewPage navigateToPreview (String url) {
         enterText(meetingLinkOrCodeInput, url);
         waitForClickability(joinMeetingButton).click();

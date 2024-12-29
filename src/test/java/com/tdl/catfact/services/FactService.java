@@ -2,9 +2,10 @@ package com.tdl.catfact.services;
 
 import com.tdl.catfact.enums.HttpMethod;
 import com.tdl.catfact.util.ApiClient;
+import com.tdl.util.AllureUtil;
 import io.restassured.response.Response;
+import io.qameta.allure.*;
 import org.bson.Document;
-import org.testng.Assert;
 
 public class FactService {
     ApiClient client;
@@ -14,13 +15,18 @@ public class FactService {
         client = new ApiClient(baseUrl, "fact");
     }
 
+    @Step("Retrieving fact")
     public FactService getFact () {
-        this.response = client.sendRequest(HttpMethod.GET);
-        this.response.then().assertThat().statusCode(200);
+        response = client.sendRequest(HttpMethod.GET);
+        response.then().assertThat().statusCode(200);
+
+        AllureUtil.logStepIntoReport(String.format("Response status code:: %d", response.statusCode()));
+        AllureUtil.logStepIntoReport(String.format("Response body: %s", response.body().toString()));
 
         return this;
     }
 
+    @Step("Comparing fact with the data in database")
     public FactService compareFacts (Document dbFact) {
         String fact = response.jsonPath().getString("fact");
         int factWordCount = fact.split("\\s+").length;
@@ -29,8 +35,11 @@ public class FactService {
         int dbWordCount = dbFact.getInteger("wordCount");
         int dbCharCount = dbFact.getInteger("charCount");
 
-//        Assert.assertTrue(factWordCount > dbWordCount, "Word count mismatch");
-//        Assert.assertTrue(factCharCount > dbCharCount, "Char count mismatch");
+        String wordResult = factWordCount > dbWordCount ? "<": ">";
+        String charResult = factCharCount > dbCharCount ? "<": ">";
+
+        AllureUtil.logStepIntoReport(String.format("Database Word Count: %d %s API Word Count: %d", dbWordCount, wordResult, factWordCount));
+        AllureUtil.logStepIntoReport(String.format("Database Char Count: %d %s API Char Count: %d", dbCharCount, charResult, factCharCount));
 
         return this;
     }

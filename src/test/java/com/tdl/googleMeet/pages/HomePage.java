@@ -1,6 +1,7 @@
 package com.tdl.googleMeet.pages;
 
 import com.tdl.googleMeet.util.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 public class HomePage extends BasePage {
@@ -15,6 +16,7 @@ public class HomePage extends BasePage {
         waitForVisibility(signInButton);
     }
 
+    @Step("Naviage to the login page")
     public LoginPage navigateToLoginPage () {
         click(signInButton);
 

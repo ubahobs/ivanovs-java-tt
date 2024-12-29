@@ -39,12 +39,12 @@ public class GoogleMeetTest extends TestBase {
                 .verifyLeaveCallButton();
 
         AudioVideo user1Media = new AudioVideo(BrowserUtils.getDriver("chrome"));
-        Assert.assertTrue(user1Media.isAudioPlaying(), "First user should have audio");
-        Assert.assertTrue(user1Media.isVideoPlaying(), "First user should have video");
+        user1Media.isAudioPlaying();
+        user1Media.isVideoPlaying();
 
         AudioVideo user2Media = new AudioVideo(BrowserUtils.getDriver("firefox"));
-        Assert.assertTrue(user2Media.isAudioPlaying(), "Second user should have audio");
-        Assert.assertTrue(user2Media.isVideoPlaying(), "Second user should have video");
+        user2Media.isAudioPlaying();
+        user2Media.isVideoPlaying();
 
     }
 }

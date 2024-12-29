@@ -1,6 +1,7 @@
 package com.tdl.googleMeet.pages;
 
 import com.tdl.googleMeet.util.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 public class LoginPage extends BasePage {
@@ -17,6 +18,7 @@ public class LoginPage extends BasePage {
         waitForVisibility(emailInput);
     }
 
+    @Step("Log in with valid credentials")
     public LandingPage login (String email, String password) {
         enterText(emailInput, email);
         click(nextButton);

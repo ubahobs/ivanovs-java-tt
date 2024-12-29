@@ -1,5 +1,7 @@
 package com.tdl.googleMeet.util;
 
+import com.tdl.util.AllureUtil;
+import com.tdl.util.ConfigUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +19,7 @@ import java.util.logging.Logger;
 public class BasePage {
     protected WebDriver driver;
     private final WebDriverWait wait;
+    private final String waitTime = ConfigUtils.getConfigProperty("default.wait");
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     /**
@@ -26,7 +29,7 @@ public class BasePage {
      */
     public BasePage(String browser) {
         this.driver = BrowserUtils.getDriver(browser);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10-second timeout
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(Long.parseLong(waitTime))); // 10-second timeout
     }
 
     /**
@@ -37,11 +40,13 @@ public class BasePage {
      */
     public boolean isVisible(By locator) {
         try {
-            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-            logger.info("Element located by " + locator + " is visible.");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            AllureUtil.logStepIntoReport(String.format("Element located by %s is visible.", locator));
+            logger.info(String.format("Element located by %s is visible.", locator));
             return true;
         } catch (Exception e) {
-            logger.warning("Element located by " + locator + " is not visible. Error: " + e.getMessage());
+            AllureUtil.logStepIntoReport(String.format("Element located by %s is not visible. Error: %s", locator, e.getMessage()));
+            logger.warning(String.format("Element located by %s is not visible. Error: %s", locator, e.getMessage()));
             return false;
         }
     }
@@ -56,12 +61,15 @@ public class BasePage {
         WebElement element;
         try {
             element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-            logger.info("Element located by " + locator + " is visible.");
+            AllureUtil.logStepIntoReport(String.format("Element located by %s is visible.", locator));
+            logger.info(String.format("Element located by %s is visible.", locator));
         } catch (TimeoutException e) {
-            logger.severe("Timeout while waiting for visibility of element located by: " + locator);
+            AllureUtil.logStepIntoReport(String.format("Element located by %s is not found within %s seconds.", locator, waitTime));
+            logger.severe(String.format("Timeout while waiting for visibility of element located by %s", locator));
             throw e;
         } catch (Exception e) {
-            logger.severe("An error occurred while waiting for visibility of element located by: " + locator + ". Error: " + e.getMessage());
+            AllureUtil.logStepIntoReport(String.format("An error occurred while waiting for visibility of element located by %s. Error: %s", locator, e.getMessage()));
+            logger.severe(String.format("An error occurred while waiting for visibility of element located by %s. Error: %s", locator, e.getMessage()));
             throw e;
         }
         return element;
@@ -74,16 +82,18 @@ public class BasePage {
      * @return The clickable WebElement.
      */
     protected WebElement waitForClickability(By locator) {
-        Logger logger = Logger.getLogger(getClass().getName());
         WebElement element;
         try {
             element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-            logger.info("Element located by " + locator + " is clickable.");
+            AllureUtil.logStepIntoReport(String.format("Element located by %s is clickable.", locator));
+            logger.info(String.format("Element located by %s is clickable.", locator));
         } catch (TimeoutException e) {
-            logger.severe("Timeout while waiting for clickability of element located by: " + locator);
+            AllureUtil.logStepIntoReport(String.format("Element located by %s is not clickable within %s seconds.", locator, waitTime));
+            logger.severe(String.format("Timeout while waiting for clickability of element located by %s", locator));
             throw e;
         } catch (Exception e) {
-            logger.severe("An error occurred while waiting for clickability of element located by: " + locator + ". Error: " + e.getMessage());
+            AllureUtil.logStepIntoReport(String.format("An error occurred while waiting for clickability of element located by %s. Error: %s", locator, e.getMessage()));
+            logger.severe(String.format("An error occurred while waiting for clickability of element located by %s. Error: %s", locator, e.getMessage()));
             throw e;
         }
         return element;
@@ -95,7 +105,16 @@ public class BasePage {
      * @param locator The Selenium By locator used to find the element.
      */
     protected void click(By locator) {
-        waitForVisibility(locator).click();
+        try {
+            WebElement element = waitForVisibility(locator);
+            element.click();
+            AllureUtil.logStepIntoReport(String.format("Clicked on element located by %s.", locator));
+            logger.info(String.format("Clicked on element located by %s.", locator));
+        } catch (Exception e) {
+            AllureUtil.logStepIntoReport(String.format("Failed to click on element located by %s. Error: %s", locator, e.getMessage()));
+            logger.severe(String.format("Failed to click on element located by %s. Error: %s", locator, e.getMessage()));
+            throw e;
+        }
     }
 
     /**
@@ -105,9 +124,17 @@ public class BasePage {
      * @param text    The text to enter into the input element.
      */
     protected void enterText(By locator, String text) {
-        WebElement element = waitForVisibility(locator);
-        element.clear();
-        element.sendKeys(text);
+        try {
+            WebElement element = waitForVisibility(locator);
+            element.clear();
+            element.sendKeys(text);
+            AllureUtil.logStepIntoReport(String.format("Entered text '%s' into element located by %s.", text, locator));
+            logger.info(String.format("Entered text '%s' into element located by %s.", text, locator));
+        } catch (Exception e) {
+            AllureUtil.logStepIntoReport(String.format("Failed to enter text '%s' into element located by %s. Error: %s", text, locator, e.getMessage()));
+            logger.severe(String.format("Failed to enter text '%s' into element located by %s. Error: %s", text, locator, e.getMessage()));
+            throw e;
+        }
     }
 
     /**
@@ -117,7 +144,16 @@ public class BasePage {
      * @return A String containing the visible text of the element.
      */
     protected String getText(By locator) {
-        return waitForVisibility(locator).getText();
+        try {
+            String text = waitForVisibility(locator).getText();
+            AllureUtil.logStepIntoReport(String.format("Retrieved text '%s' from element located by %s.", text, locator));
+            logger.info(String.format("Retrieved text '%s' from element located by %s.", text, locator));
+            return text;
+        } catch (Exception e) {
+            AllureUtil.logStepIntoReport(String.format("Failed to retrieve text from element located by %s. Error: %s", locator, e.getMessage()));
+            logger.severe(String.format("Failed to retrieve text from element located by %s. Error: %s", locator, e.getMessage()));
+            throw e;
+        }
     }
 
     /**
@@ -128,6 +164,15 @@ public class BasePage {
      * @return A String containing the value of the specified CSS property.
      */
     protected String getCssProperty(By locator, String prop) {
-        return waitForVisibility(locator).getCssValue(prop);
+        try {
+            String value = waitForVisibility(locator).getCssValue(prop);
+            AllureUtil.logStepIntoReport(String.format("Retrieved CSS property '%s' with value '%s' from element located by %s.", prop, value, locator));
+            logger.info(String.format("Retrieved CSS property '%s' with value '%s' from element located by %s.", prop, value, locator));
+            return value;
+        } catch (Exception e) {
+            AllureUtil.logStepIntoReport(String.format("Failed to retrieve CSS property '%s' from element located by %s. Error: %s", prop, locator, e.getMessage()));
+            logger.severe(String.format("Failed to retrieve CSS property '%s' from element located by %s. Error: %s", prop, locator, e.getMessage()));
+            throw e;
+        }
     }
 }
