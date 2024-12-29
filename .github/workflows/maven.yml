@@ -1,0 +1,27 @@
+name: Run Tests with Allure Reporting
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Tests
+        run: mvn clean test
+
+      - name: Generate Allure Report
+        run: mvn allure:report -Dallure.results.directory=./allure-results
+
+      - name: Upload Allure Report as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: target/site/allure-maven-plugin/
