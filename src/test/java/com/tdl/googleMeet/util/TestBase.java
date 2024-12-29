@@ -13,10 +13,14 @@ public class TestBase {
     @BeforeMethod
     public void setUp () {
         String browser1 = ConfigUtils.getConfigProperty("meet.user1.browser");
+        String browser2 = ConfigUtils.getConfigProperty("meet.user2.browser");
+
+        if (Boolean.parseBoolean(ConfigUtils.getConfigProperty("headless")))
+            BrowserUtils.setHeadless();
+
         BrowserUtils.setChromeAudioVideoBrowserOptions();
         BrowserUtils.initializeDriver(browser1);
 
-        String browser2 = ConfigUtils.getConfigProperty("meet.user2.browser");
         BrowserUtils.setFirefoxAudioVideoBrowserOptions();
         BrowserUtils.initializeDriver(browser2);
     }

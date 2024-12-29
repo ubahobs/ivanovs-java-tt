@@ -108,4 +108,15 @@ public class BrowserUtils {
         profile.setPreference("media.navigator.streams.fake", true);
         firefoxOptions.setProfile(profile);
     }
+
+    /**
+     * Sets headless mode for the drivers.
+     */
+    public static void setHeadless() {
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--disable-gpu");
+        chromeOptions.addArguments("--window-size=1920,1080");
+
+        firefoxOptions.addArguments("--headless");
+    }
 }
