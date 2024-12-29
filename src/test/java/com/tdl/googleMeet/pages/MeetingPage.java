@@ -1,9 +1,11 @@
 package com.tdl.googleMeet.pages;
 
-import com.tdl.util.BasePage;
+import com.tdl.googleMeet.util.BasePage;
 import org.openqa.selenium.By;
 
 public class MeetingPage extends BasePage {
+
+    private final String browser;
 
     private final By meetingLinkText = By.xpath("//div[contains(text(), 'meet.google.com')]");
     private final By turnOnMicButton = By.cssSelector("[aria-label='Turn on microphone']");
@@ -13,8 +15,9 @@ public class MeetingPage extends BasePage {
     private final By leaveCallButton = By.cssSelector("[aria-label='Leave call']");
 
 
-    public MeetingPage () {
-        super();
+    public MeetingPage (String browser) {
+        super(browser);
+        this.browser = browser;
         waitForVisibility(meetingLinkText);
     }
 

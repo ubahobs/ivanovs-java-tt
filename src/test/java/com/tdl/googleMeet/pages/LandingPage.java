@@ -1,19 +1,20 @@
 package com.tdl.googleMeet.pages;
 
-import com.tdl.util.BasePage;
+import com.tdl.googleMeet.util.BasePage;
 import org.openqa.selenium.By;
 
 public class LandingPage extends BasePage {
 
-//    permission[type="microphone camera"]
+    private final String browser;
 
     private final By newMeetingButton = By.xpath("//span[contains(text(), 'New meeting')]");
     private final By instantMeetingOption = By.cssSelector("[aria-label='Start an instant meeting']");
     private final By meetingLinkOrCodeInput = By.cssSelector("[placeholder='Enter a code or link']");
     private final By joinMeetingButton = By.xpath("//span[contains(text(), 'Join')]");
 
-    public LandingPage () {
-        super();
+    public LandingPage (String browser) {
+        super(browser);
+        this.browser = browser;
         waitForVisibility(newMeetingButton);
     }
 
@@ -21,17 +22,14 @@ public class LandingPage extends BasePage {
         click(newMeetingButton);
         click(instantMeetingOption);
 
-        return new MeetingPage();
+        return new MeetingPage(browser);
     }
 
     public MeetingPage joinMeeting (String url) {
         enterText(meetingLinkOrCodeInput, url);
         click(joinMeetingButton);
 
-        return new MeetingPage();
+        return new MeetingPage(browser);
     }
-
-
-
 
 }
