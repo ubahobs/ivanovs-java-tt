@@ -7,16 +7,13 @@ public class TestBase {
 
     @BeforeMethod
     public void setUp () {
-        // Read browser type from the configuration file
-        String browser = ConfigUtils.getConfigProperty("browser");
-
-        // Initialize the browser
+        String browser = ConfigUtils.getConfigProperty("meet.user1.browser");
+        BrowserUtils.setAudioVideoBrowserOptions();
         BrowserUtils.initializeDriver(browser);
     }
 
     @AfterMethod
     public void tearDown () {
-        // Quit the browser after each test
         BrowserUtils.quitDriver();
     }
 }

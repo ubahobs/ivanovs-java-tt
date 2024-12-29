@@ -7,12 +7,12 @@ import java.util.Properties;
 public class ConfigUtils {
 
     private static Properties properties;
+    private static final String propsPath = "src/test/resources/test-config/project.properties";
 
-    // Static block to initialize the Properties object
     static {
         try {
             properties = new Properties();
-            FileInputStream fileInputStream = new FileInputStream("src/test/resources/config.properties");
+            FileInputStream fileInputStream = new FileInputStream(propsPath);
             properties.load(fileInputStream);
             fileInputStream.close();
         } catch (IOException e) {
