@@ -7,10 +7,10 @@ public class LandingPage extends BasePage {
 
 //    permission[type="microphone camera"]
 
-    private By newMeetingButton = By.xpath("//span[contains(text(), 'New meeting')]");
-    private By instantMeetingOption = By.cssSelector("[aria-label='Start an instant meeting']");
-    private By meetingLinkOrCodeInput = By.cssSelector("[placeholder='Enter a code or link']");
-    private By joinMeetingButton = By.xpath("//span[contains(text(), 'Join')]");
+    private final By newMeetingButton = By.xpath("//span[contains(text(), 'New meeting')]");
+    private final By instantMeetingOption = By.cssSelector("[aria-label='Start an instant meeting']");
+    private final By meetingLinkOrCodeInput = By.cssSelector("[placeholder='Enter a code or link']");
+    private final By joinMeetingButton = By.xpath("//span[contains(text(), 'Join')]");
 
     public LandingPage () {
         super();

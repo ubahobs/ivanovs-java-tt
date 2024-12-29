@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 
 public class HomePage extends BasePage {
 
-    private By signInButton = By.cssSelector("#m2 [label='Sign into Google Meet ']:first-child");
+    private final By signInButton = By.cssSelector("#m2 [label='Sign into Google Meet ']:first-child");
 
     public HomePage () {
         super();

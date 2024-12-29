@@ -5,9 +5,9 @@ import org.openqa.selenium.By;
 
 public class LoginPage extends BasePage {
 
-    private By emailInput = By.cssSelector("[type='email']");
-    private By passwordInput = By.cssSelector("[type='password']");
-    private By nextButton = By.xpath("//span[contains(text(), 'Next')]");
+    private final By emailInput = By.cssSelector("[type='email']");
+    private final By passwordInput = By.cssSelector("[type='password']");
+    private final By nextButton = By.xpath("//span[contains(text(), 'Next')]");
 
     public LoginPage () {
         super();

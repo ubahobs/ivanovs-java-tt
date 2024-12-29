@@ -5,12 +5,12 @@ import org.openqa.selenium.By;
 
 public class MeetingPage extends BasePage {
 
-    private By meetingLinkText = By.xpath("//div[contains(text(), 'meet.google.com')]");
-    private By turnOnMicButton = By.cssSelector("[aria-label='Turn on microphone']");
-    private By turnOffMicButton = By.cssSelector("[aria-label='Turn off microphone']");
-    private By sendReactionButton = By.cssSelector("[aria-label='Send a reaction']");
-    private By reactionsToolbar = By.cssSelector("[role='toolbar']");
-    private By leaveCallButton = By.cssSelector("aria-label='Leave call'");
+    private final By meetingLinkText = By.xpath("//div[contains(text(), 'meet.google.com')]");
+    private final By turnOnMicButton = By.cssSelector("[aria-label='Turn on microphone']");
+    private final By turnOffMicButton = By.cssSelector("[aria-label='Turn off microphone']");
+    private final By sendReactionButton = By.cssSelector("[aria-label='Send a reaction']");
+    private final By reactionsToolbar = By.cssSelector("[role='toolbar']");
+    private final By leaveCallButton = By.cssSelector("[aria-label='Leave call']");
 
 
     public MeetingPage () {
@@ -23,8 +23,8 @@ public class MeetingPage extends BasePage {
     }
 
     public MeetingPage verifyButtons () {
-        click(turnOnMicButton);
         click(turnOffMicButton);
+        click(turnOnMicButton);
         click(sendReactionButton);
         waitForVisibility(reactionsToolbar);
 
@@ -32,7 +32,9 @@ public class MeetingPage extends BasePage {
     }
 
     public MeetingPage verifyLeaveCallButton () {
-        getCssProperty(leaveCallButton, "background-color")
+        String cssProp = getCssProperty(leaveCallButton, "background-color");
+
+        return this;
     }
 
 
