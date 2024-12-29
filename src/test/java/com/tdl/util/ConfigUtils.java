@@ -21,7 +21,7 @@ public class ConfigUtils {
         }
     }
 
-    public static String getConfigProperty(String key) {
+    public static String getConfigProperty (String key) {
         String value = properties.getProperty(key);
         if (value == null)
             throw new RuntimeException("Key not found in configuration file: " + key);

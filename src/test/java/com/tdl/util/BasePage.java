@@ -12,35 +12,32 @@ public class BasePage {
     protected WebDriver driver;
     private final WebDriverWait wait;
 
-    public BasePage() {
+    public BasePage () {
         this.driver = BrowserUtils.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10-second timeout
     }
 
-    protected WebElement waitForVisibility(By locator) {
+    protected WebElement waitForVisibility (By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    protected void click(By locator) {
+    protected void click (By locator) {
         waitForVisibility(locator).click();
     }
 
-    protected void enterText(By locator, String text) {
+    protected void enterText (By locator, String text) {
         WebElement element = waitForVisibility(locator);
         element.clear();
         element.sendKeys(text);
     }
 
-    protected String getText(By locator) {
+    protected String getText (By locator) {
         return waitForVisibility(locator).getText();
     }
 
-    protected boolean isElementDisplayed(By locator) {
-        try {
-            return waitForVisibility(locator).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
+    protected String getCssProperty (By locator, String prop) {
+        return waitForVisibility(locator).getCssValue(prop);
     }
+
 }
 

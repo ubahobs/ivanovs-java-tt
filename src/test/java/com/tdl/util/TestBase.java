@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeMethod;
 public class TestBase {
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp () {
         // Read browser type from the configuration file
         String browser = ConfigUtils.getConfigProperty("browser");
 
@@ -15,7 +15,7 @@ public class TestBase {
     }
 
     @AfterMethod
-    public void tearDown() {
+    public void tearDown () {
         // Quit the browser after each test
         BrowserUtils.quitDriver();
     }

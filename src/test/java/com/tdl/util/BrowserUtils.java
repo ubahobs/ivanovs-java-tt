@@ -11,7 +11,7 @@ public class BrowserUtils {
      * Gets the WebDriver instance.
      * @return The WebDriver instance.
      */
-    public static WebDriver getDriver() {
+    public static WebDriver getDriver () {
         if (driver == null)
             throw new RuntimeException("WebDriver is not initialized. Call initializeDriver() first.");
 
@@ -22,7 +22,7 @@ public class BrowserUtils {
      * Initializes the WebDriver if not already initialized.
      * @param browser The browser to use (e.g., "chrome", "firefox").
      */
-    public static void initializeDriver(String browser) {
+    public static void initializeDriver (String browser) {
         if (driver == null)
             switch (browser.toLowerCase()) {
                 case "chrome":
@@ -43,7 +43,7 @@ public class BrowserUtils {
      * Opens the specified URL in the browser.
      * @param url The URL to open.
      */
-    public static void open(String url) {
+    public static void open (String url) {
         if (driver == null)
             throw new RuntimeException("WebDriver is not initialized. Call initializeDriver() first.");
 
@@ -53,7 +53,7 @@ public class BrowserUtils {
     /**
      * Closes the browser and quits the WebDriver.
      */
-    public static void quitDriver() {
+    public static void quitDriver () {
         if (driver != null) {
             driver.quit();
             driver = null;
