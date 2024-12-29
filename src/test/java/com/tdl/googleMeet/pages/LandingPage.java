@@ -2,7 +2,6 @@ package com.tdl.googleMeet.pages;
 
 import com.tdl.util.BasePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class LandingPage extends BasePage {
 
@@ -13,7 +12,7 @@ public class LandingPage extends BasePage {
     private By meetingLinkOrCodeInput = By.cssSelector("[placeholder='Enter a code or link']");
     private By joinMeetingButton = By.xpath("//span[contains(text(), 'Join')]");
 
-    public LandingPage() {
+    public LandingPage () {
         super();
         waitForVisibility(newMeetingButton);
     }

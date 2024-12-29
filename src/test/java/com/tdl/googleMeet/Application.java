@@ -5,7 +5,7 @@ import com.tdl.util.BrowserUtils;
 import com.tdl.util.ConfigUtils;
 
 public class Application {
-    public static LandingPage navigateToLandingPage() {
+    public static LandingPage navigateToLandingPage () {
         BrowserUtils.open(ConfigUtils.getConfigProperty("meet.url"));
         return new LandingPage();
     }
