@@ -35,7 +35,6 @@ Thumbs.db
 
 # Test report files
 *.html
-*.xml
 *.json
 
 # Browser drivers (if included in the repo)
@@ -51,4 +50,9 @@ Thumbs.db
 *.swp
 *.bak
 *.tmp
+
+# Allure
+allure-report/
+allure-results/
+
 
