@@ -4,6 +4,8 @@ import com.tdl.googleMeet.util.BasePage;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import java.util.Objects;
+
 public class MeetingPage extends BasePage {
 
     private final String browser;
@@ -25,7 +27,7 @@ public class MeetingPage extends BasePage {
     public MeetingPage (String browser) {
         super(browser);
         this.browser = browser;
-        click(turnOnMicButton);
+        waitForVisibility(turnOffMicButton);
         if (isVisible(gotItPopUpButton)) click(gotItPopUpButton);
     }
 
@@ -55,7 +57,12 @@ public class MeetingPage extends BasePage {
     }
 
     public MeetingPage verifyLeaveCallButton () {
-        String expectedColor = "cssProp";
+        String expectedColor;
+        if (Objects.equals(browser, "chrome"))
+            expectedColor = "rgba(220, 54, 46, 1)";
+        else
+            expectedColor = "rgb(220, 54, 46)";
+
         String actualColor = getCssProperty(leaveCallButton, "background-color");
         Assert.assertEquals(actualColor, expectedColor,
                 "The color of the leave call button should be equal to: " + expectedColor + " actual: " + actualColor);

@@ -28,9 +28,9 @@ public class BrowserUtils {
      * @throws RuntimeException if no WebDriver instance is found with the given name.
      */
     public static WebDriver getDriver(String driverName) {
-        if (!drivers.containsKey(driverName)) {
+        if (!drivers.containsKey(driverName))
             throw new RuntimeException("No WebDriver instance found with name: " + driverName);
-        }
+
         return drivers.get(driverName);
     }
 
@@ -69,9 +69,9 @@ public class BrowserUtils {
      */
     public static void open(String driverName, String url) {
         WebDriver driver = drivers.get(driverName);
-        if (driver == null) {
+        if (driver == null)
             throw new RuntimeException("WebDriver is not initialized. Call initializeDriver() first.");
-        }
+
         driver.get(url);
     }
 
@@ -79,11 +79,9 @@ public class BrowserUtils {
      * Closes all active WebDriver instances and clears the driver map.
      */
     public static void quitAllDrivers() {
-        for (WebDriver driver : drivers.values()) {
-            if (driver != null) {
-                driver.quit();
-            }
-        }
+        for (WebDriver driver : drivers.values())
+            if (driver != null) driver.quit();
+
         drivers.clear();
     }
 
